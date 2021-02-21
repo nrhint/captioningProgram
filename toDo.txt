@@ -1,0 +1,3 @@
+ - Make the program open up the video inside of itself.
+ - make the program burn in the captions if the user wants that
+ - 
