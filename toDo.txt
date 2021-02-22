@@ -1,3 +1,4 @@
  - Make the program open up the video inside of itself.
  - make the program burn in the captions if the user wants that
- - 
+ - Add an advanced options in the menu for changing the cc length or other things
+ - change the output format to have either SRT or VTT captions
