@@ -2,24 +2,7 @@
 
 from pynput import keyboard
 
-def convert_time(timeInSec):
-    hr = int(timeInSec//(60*60))
-    mn = int((timeInSec-(hr*60*60))//60)
-    sec = int((timeInSec-((hr*60*60)+mn*60))//1)
-    ms = str(round(timeInSec-int(timeInSec), 3))[2:]
-    return "%s:%s:%s,%s"%(str(hr).zfill(2), str(mn).zfill(2), str(sec).zfill(2), ms)
-
-def write_file(file_path, file_name, file_extension, output):
-    try:
-        try:
-            open('%s/%s.%s'%(file_path, file_name, file_extension), 'w').write(output)
-        except FileNotFoundError:
-            import os
-            os.mkdir(file_path)
-            open('%s/%s.%s'%(file_path, file_name, file_extension), 'w').write(output)
-    except:
-        print('Cannot write because file "%s/%s.%s" not found'%(file_path, file_name, file_extension))
-        raise Exception
+from utils import convert_time, write_file, generateSRTAdvanced
 
 from time import time
 
@@ -46,13 +29,16 @@ listener.start()
 
 ##Print out the instructions:
 print("Welcome to the manual captioning!")
-print("This will take a text file that you have generated and it will turn it into captions!")
+print("""
+This will take a text file that you have generated and it will turn it into captions!
+Please enter where you file is saved including the extension. For example: example.txt
+This will tell the program where to look for your file where you have typed the captions""")
 
 state = 'init'
 
 while state != False:
     if state == 'init':
-        i = input('What is the file path of the text file? ')
+        i = input('What is the name of the text file? ')
         try:
             text = open(i, 'r').read()
             state = 'parse'
@@ -103,6 +89,8 @@ playing then press the 'e' key to end the program.""")
             timeEnd = time()
             data.append([timeStart, timeEnd, line])
             lineIndex += 1
+            if lineIndex> len(text):
+                print("That was the last line in the file. Please press 'e'")
             state = 'wait'
         except IndexError:
             state = 'whoops'
@@ -111,7 +99,7 @@ playing then press the 'e' key to end the program.""")
         state = False
     elif state == 'whoops':
         print("""
-        AAH! You seem to have run out of lines. If you accidently pressed the
+        AAH! You seem to have run out of lines. If you accidentally pressed the
         't key onw too many times simply press the e key. If your video is
         still going and you have more text to caption please check the format
         of the text file with your captions. Remember that every time there is
@@ -140,18 +128,10 @@ for time in data:
     time[0] = int(time[0])-baseTime
     time[1] = int(time[1])-baseTime
 
-srt = ''
-number = 0
-for l in data:
-    srt += '%s\n'%number
-    srt += '%s --> %s\n'%(convert_time(l[0]), convert_time(l[1]))
-    srt += '%s\n'%l[2]
-    srt += '\n'
-    number += 1
+srt = generateSRTAdvanced(data, ccLength = 8)
 
 try:
     write_file('output', 'captions', 'srt', srt)
 except:
     print('Generate test unsuccess.')
 print('File saved in %s/%s.%s'%('output', 'captions', 'srt'))
-print(data)
