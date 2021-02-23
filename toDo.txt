@@ -2,3 +2,8 @@
  - make the program burn in the captions if the user wants that
  - Add an advanced options in the menu for changing the cc length or other things
  - change the output format to have either SRT or VTT captions
+ - make a config file
+   - default ccLength
+   - default pos and size of captions
+   - default rotation?
+ - Make a option to shift the captions in time

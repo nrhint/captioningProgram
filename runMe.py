@@ -2,7 +2,8 @@
 
 from pynput import keyboard
 
-from utils import convert_time, write_file, generateSRTAdvanced
+from util.file_util import open_file, parse_config, write_file
+from util.generate_captions_util import GenerateCaptions
 
 from time import time
 
@@ -128,10 +129,14 @@ for time in data:
     time[0] = int(time[0])-baseTime
     time[1] = int(time[1])-baseTime
 
-srt = generateSRTAdvanced(data, ccLength = 8)
+configData = open_file('.', 'config', 'cfg')
+configData = parse_config(configData)
+
+captioner = GenerateCaptions(data, configData)
+data_to_write = captioner.generate()
 
 try:
-    write_file('output', 'captions', 'srt', srt)
+    write_file('output', 'captions', 'srt', data_to_write)
 except:
     print('Generate test unsuccess.')
 print('File saved in %s/%s.%s'%('output', 'captions', 'srt'))
