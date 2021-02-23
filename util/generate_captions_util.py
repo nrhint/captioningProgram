@@ -29,21 +29,35 @@ class GenerateCaptions:
             duration = end-start
             smallDuration = duration/divisions
             for div in range(0, divisions):
+                if tend != 0:
+                    tstart = tend
                 tend = (div+1)*self.ccLength
-                tstart = div*self.ccLength
-                if div == divisions:
+                if tend > len(words):
+                    tend = len(words)
+                else:
+                    while words[tend] != ' ':
+                        tend -= 1
+                #tstart = div*ccLength
+                new_start_time = start + (smallDuration * div)
+                new_end_time = start + (smallDuration * (div + 1))
+                if div == divisions:# - 1:
                     captionText = words[tstart:]
+                    new_end_time = end
                 else:
                     captionText = words[tstart:tend]
+                #convert the caption text from a list to a string
                 finalCaptionText = ''
                 for w in captionText:
-                    finalCaptionText += str(w)+' '
+                    finalCaptionText += str(w)+''
+                #print("%s: %s %s"%(ind, tstart, tend))
+                if finalCaptionText[1] == '\n':
+                    finalCaptionText = finalCaptionText[2:]
                 text += str(ccNumber)+'\n'
-                text += convert_time(start+(smallDuration*div))+' --> '+convert_time(start+(smallDuration*(div+1)))+'\n'
+                text += str(convert_time(new_start_time))+' --> '+ str(convert_time(new_end_time))+'\n'
                 text += str(finalCaptionText)+'\n'
-                print(finalCaptionText)
                 text += '\n'
                 ccNumber += 1
+
         print(text)
         return text
     def generateVTT(self):
