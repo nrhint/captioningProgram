@@ -19,5 +19,5 @@ Hard:
 
 Plan:
  - add to and use the config file
- - change the menu to be in a differnt file
+ - change the menu to be in a different file
  - build the auto update function
