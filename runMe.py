@@ -2,7 +2,8 @@
 
 from pynput import keyboard
 
-from utils import convert_time, write_file, generateSRTAdvanced
+from util.file_util import open_file, parse_config, write_file
+from util.generate_captions_util import GenerateCaptions
 
 from time import time
 
@@ -55,7 +56,8 @@ When someone starts to talk press the t key. This will make the program print th
 of text that it is captioning. When the speaker has finished the pronted line release
 the 't' key and wait for the next line to start t be spoken. The program will record
 the start and end of when you press and release the 't' key. When the video is finished
-playing then press the 'e' key to end the program.""")
+playing then press the 'e' key to end the program. If at any time you want to restart
+press the 'r' key and it will restart the captioning section.""")
         state = 'waitForGo'
     elif state == 'waitForGo':
         if pressed == 'g':
@@ -80,7 +82,7 @@ playing then press the 'e' key to end the program.""")
             wait = True
             p = False
             while wait:
-                if pressed == 't':
+                if pressed == 't' and not p:
                     timeStart = time()
                     p = True
                 elif pressed != 't' and p:
@@ -128,10 +130,17 @@ for time in data:
     time[0] = int(time[0])-baseTime
     time[1] = int(time[1])-baseTime
 
-srt = generateSRTAdvanced(data, ccLength = 8)
+configData = open_file('.', 'config', 'cfg')
+configData = parse_config(configData)
+
+captioner = GenerateCaptions(data, configData)
+data_to_write = captioner.generate()
 
 try:
-    write_file('output', 'captions', 'srt', srt)
+    write_file('output', 'captions', 'srt', data_to_write)
 except:
+    print(data_to_write)
     print('Generate test unsuccess.')
+    
 print('File saved in %s/%s.%s'%('output', 'captions', 'srt'))
+input("Press the 'Enter' key to finish")
