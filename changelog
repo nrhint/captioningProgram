@@ -1,0 +1,14 @@
+V1.2.0:
+Added the changelog
+Updating the Menu and adding more options to the configuration.
+Adding the framework for an advanced menu
+Rewrote the runMe.py file to make future development easier. Also added a data structure for captions so that it is easier to use.
+Changed the order the program prints out the lines you are captioning. 
+Also made the program auto end the captioning when you finish all of the lines of text
+
+V1.1.0:
+Updated the captioning method to count characters
+Fixed minor spelling errors.
+
+V1.0.0:
+uploaded the basic workings of the program
