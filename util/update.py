@@ -27,9 +27,20 @@ def checkForUpdates(config):
         i = input('update the program? (Y/n)  ')
         if i != 'n':
             downloadUpdates()
-    downloadUpdates()
+
 def downloadUpdates():
     print('downloading updates...')
-    baseUrl = 'https://raw.github.com/nrhint/captioningProgram/main'
+    baseUrl = 'https://raw.github.com/nrhint/captioningProgram/develop'
     tree = getUrl(baseUrl+'/tree.tree')
-    print('pausing')
+    tree = tree.text.split('\n')
+    for path in tree:
+        tmpUrl = baseUrl+str(path[1:])
+        tmpUrl = tmpUrl.replace('\\', '/')
+        print(tmpUrl)
+        file = getUrl(tmpUrl)
+        open(path, 'w').write(file.text)
+        print("%s downloaded..."%tmpUrl)
+    print('Finished downloading. Please restart the program...')
+    from time import sleep
+    sleep(3)
+    quit()

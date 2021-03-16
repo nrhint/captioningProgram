@@ -31,7 +31,7 @@ write_file('.', 'tree', 'tree', text)
 
 ##update the version file:
 versionData = open_file('.', 'version', '')
-change = int(input('1.2.3.4? default 4:  '))
+change = int(input('1.2.3.4?  '))
 if change < 4 : #If it is not 4: 
     if change < 3: #if it is 2 or 1
         if change < 2: #change must be 1
