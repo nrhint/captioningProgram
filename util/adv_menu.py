@@ -56,7 +56,7 @@ class AdvMenu:
                             print("Value set tp True")
             elif i == 3: #Update the program
                 from util.update import runUpdate
-                runUpdate()
+                runUpdate(self.config)
             else:
                 print("invalid option")
         return self.config
