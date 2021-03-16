@@ -31,5 +31,5 @@ def checkForUpdates(config):
 def downloadUpdates():
     print('downloading updates...')
     baseUrl = 'https://raw.github.com/nrhint/captioningProgram/main'
-    tree = getUrl(baseUrl+'/tree.t')
+    tree = getUrl(baseUrl+'/tree.tree')
     print('pausing')
