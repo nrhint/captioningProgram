@@ -14,7 +14,8 @@ class Menu:
         print("Welcome to the manual captioning version %s!"%self.config.version)
         self.startingMenu()
     def startingMenu(self):
-        if self.config.autoOpenFile == 'True' and self.error == False:
+        i = input('try to auto run ?(Y/n)  ')
+        if self.config.autoOpenFile == 'True' and self.error == False and i != 'n':
             self.dataFile = self.config.deafultCaptionFile
         else:
             self.error = False
@@ -43,7 +44,9 @@ captions. Please type the file name then press enter:  """%(self.config.deafultC
             self.data.append(Line(text = line))
         self.keyloggingMenu()
     def advancedMenu(self):
-        pass
+        from util.adv_menu import AdvMenu
+        advancedMenu = AdvMenu(self.config)
+        advancedMenu.run()
     def keyloggingMenu(self):
         print('Starting the keylogging to track the timestamps of the keypresses...')
         from util.log_keys import trackTimes

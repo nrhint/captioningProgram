@@ -1,3 +1,9 @@
+V1.2.1
+Goals:
+  Add an auto update function so the user can update the program internally.
+  Build the advanced menu with options to chang the configure file.
+  Make the version number of the program automatically change and update.
+
 V1.2.0:
 Added the changelog
 Updating the Menu and adding more options to the configuration.
