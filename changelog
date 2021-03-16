@@ -4,6 +4,9 @@ Goals:
   Build the advanced menu with options to chang the configure file.
   Make the version number of the program automatically change and update.
 
+Finished the advanced menu
+added a version file
+
 V1.2.0:
 Added the changelog
 Updating the Menu and adding more options to the configuration.

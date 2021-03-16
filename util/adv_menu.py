@@ -55,7 +55,8 @@ class AdvMenu:
                             self.config.autoOpenFile = 'True'
                             print("Value set tp True")
             elif i == 3: #Update the program
-                print("Unfinished...")
+                from util.update import runUpdate
+                runUpdate()
             else:
                 print("invalid option")
         return self.config

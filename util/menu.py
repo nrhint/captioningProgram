@@ -20,11 +20,11 @@ class Menu:
         else:
             self.error = False
             self.dataFile = input("""
-Press enter if you have entered your text into '%s' otherwise: This will take a
-text file that you have generated and it will turn it into captions! Please 
-enter where you file is saved including the extension. For example: example.txt
-This will tell the program where to look for your file where you have typed the 
-captions. Please type the file name then press enter:  """%(self.config.deafultCaptionFile))
+Ender z for the advanced menu. This will take a text file that you have 
+generated and it will turn it into captions! Please enter where you file 
+is saved including the extension. For example: example.txt This will tell 
+the program where to look for your file where you have typed the captions. 
+Please type the file name then press enter:  """)
             if self.dataFile == 'advanced' or self.dataFile == 'a':
                 self.advancedMenu()
             else:
