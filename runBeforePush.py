@@ -2,7 +2,7 @@
 
 import os
 
-exclude = ['.\\.git', '.\\.vscode', '\\__pycache__', '.\\output', '__pycache__']
+exclude = ['.\\.git', '.\\.vscode', '\\__pycache__', '.\\output', '__pycache__', 'test']
 
 paths = []
 
