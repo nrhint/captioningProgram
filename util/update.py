@@ -30,17 +30,28 @@ def checkForUpdates(config):
 
 def downloadUpdates():
     print('downloading updates...')
+    from os.path import isdir
     baseUrl = 'https://raw.github.com/nrhint/captioningProgram/develop'
     tree = getUrl(baseUrl+'/tree.tree')
     tree = tree.text.split('\n')
     for path in tree:
         tmpUrl = baseUrl+str(path[1:])
         tmpUrl = tmpUrl.replace('\\', '/')
-        print(tmpUrl)
+        #print(tmpUrl)
         file = getUrl(tmpUrl)
-        open(path, 'w').write(file.text)
+        print(path)
+        text = file.text.replace(u"\uFFFD", " !!!Unknown char was here!!! ")
+        try:
+            open(path, 'w').write(text)
+        except PermissionError:
+            if isdir(path):
+                print('folder skipped')
+            else:
+                print("Error...")
+                input()
+                raise Exception
+
         print("%s downloaded..."%tmpUrl)
     print('Finished downloading. Please restart the program...')
-    from time import sleep
-    sleep(3)
+    input('Press enter to close: ')
     quit()

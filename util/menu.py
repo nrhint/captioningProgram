@@ -20,7 +20,7 @@ class Menu:
         else:
             self.error = False
             self.dataFile = input("""
-Ender z for the advanced menu. This will take a text file that you have 
+Enter a for the advanced menu. This will take a text file that you have 
 generated and it will turn it into captions! Please enter where you file 
 is saved including the extension. For example: example.txt This will tell 
 the program where to look for your file where you have typed the captions. 

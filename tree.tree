@@ -32,6 +32,7 @@
 .\util\log_keys.py
 .\util\menu.py
 .\util\subtitle_util.py
+.\util\text_util.py
 .\util\time_util.py
 .\util\update.py
 .\util\__init__.py
