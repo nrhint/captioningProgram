@@ -1,3 +1,20 @@
+V1.2.1
+Goals:
+  Add an auto update function so the user can update the program internally. (Finished)
+  Build the advanced menu with options to chang3 the configure file. (Finished)
+  Make the version number of the program automatically change and update. (Finished!)
+  Update the read me file with updated instructions
+
+V1.2.1.2, V1.2.1.3:
+Updating versions to test out the version updater. Finished and it now works.
+
+V1.2.1.1:
+pushing changes that will allow the testing of the auto update function
+
+V1.2.1.0:
+Finished the advanced menu
+added a version file
+
 V1.2.0:
 Added the changelog
 Updating the Menu and adding more options to the configuration.
