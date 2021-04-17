@@ -1,3 +1,11 @@
+V1.3.1.0:
+Goals:
+  Add the option to do the VTT captioning (Not happened)
+  Add options for the VTT formatting (Not happened)
+  Allow the user to render a frame from the video to see the captions for a frame (Not happened)
+  Add to the advanced menu and make a new branch with beta features
+  Added a feature to convert a VTT file to and SRT file either one at a time or in a batch using the advanced menu.
+
 V1.2.1
 Goals:
   Add an auto update function so the user can update the program internally. (Finished)

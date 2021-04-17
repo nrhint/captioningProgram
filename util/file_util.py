@@ -36,3 +36,6 @@ def parse_config(configData):
         except IndexError:#A blank line
             pass
     return finishedList
+
+def parseVtt(filepath):
+    pass
