@@ -78,8 +78,8 @@ class GenerateCaptions:
         text = ''
         for line in linesAndTimes:
             text += line[0] +'\n'
-            text += '\n'
-            text += line[1] + ' --> ' + line[2]
+            #text += '\n'
+            text += line[1] + ' --> ' + line[2] + '\n'
             text += line[3] +'\n'
             text += '\n'
         return text
