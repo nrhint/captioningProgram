@@ -17,5 +17,8 @@ class Config:
         self.format = self.deafultFormat
         self.deafultCaptionFile = self.rawConfigData[2]
         self.autoOpenFile = self.rawConfigData[3]
-        
-        
+        self.defaultSize = self.rawConfigData[4]
+        self.horizontalPosition = self.rawConfigData[5]
+        self.verticalPosition = self.rawConfigData[6]
+        self.saveDump = int(self.rawConfigData[7])
+        self.runNumber = int(self.rawConfigData[8])

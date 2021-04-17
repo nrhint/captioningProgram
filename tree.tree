@@ -1,5 +1,6 @@
 .\data\config.py
 .\data\data.py
+.\data\video.py
 .\data\__init__.py
 .\pynput\keyboard\_base.py
 .\pynput\keyboard\_darwin.py
@@ -27,10 +28,13 @@
 .\pynput\mouse
 .\pynput\_util
 .\util\adv_menu.py
+.\util\beta_menu.py
 .\util\file_util.py
+.\util\formatConverter.py
 .\util\generate_captions_util.py
 .\util\log_keys.py
 .\util\menu.py
+.\util\render_frame.py
 .\util\subtitle_util.py
 .\util\text_util.py
 .\util\time_util.py
@@ -41,6 +45,7 @@
 .\changelog
 .\config.cfg
 .\example.txt
+.\lastDump.pk
 .\LICENSE
 .\README.md
 .\runBeforePush.py

@@ -1,6 +1,9 @@
 ##Nathan Hinton
 ##This will be the advanced menu for the program
 
+from util.file_util import write_file
+
+
 class AdvMenu:
     def __init__(self, config):
         self.config = config
@@ -12,7 +15,10 @@ class AdvMenu:
             (0): Exit the menu
             (1): Make a one time change to the configuration.
             (2): Update the configuration file.
-            (3): update this program.
+            (3): Update this program.
+            (4): Beta menu
+            (5): Format converter (only vtt to srt supported as of now)
+            (6): Batch format change
 
             """))
             if i == 0: #Exit the menu all the way
@@ -57,6 +63,27 @@ class AdvMenu:
             elif i == 3: #Update the program
                 from util.update import runUpdate
                 runUpdate(self.config)
+            elif i == 4:
+                from util.beta_menu import betaMenu
+                betaMenu(self.config)
+            elif i == 5:
+                from util.formatConverter import Convert
+                Convert()
+            elif i == 6:
+                from util.formatConverter import Convert
+                from os import walk, path
+                paths = []
+                folder = input('Folder to scan: ')
+                for root, dirs, files in walk(folder, topdown=False):
+                    for name in files:
+                        if name[-3:] == 'vtt':
+                            paths.append(path.join(root, name))
+                print('found %s files to convert'%len(paths))
+                print(paths)
+                for p in paths:
+                    c = Convert(p)
+                    data = c.finishedData
+                    open(str(p[:-4])+'.srt', 'w').write(data)
             else:
                 print("invalid option")
         return self.config

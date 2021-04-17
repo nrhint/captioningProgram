@@ -29,6 +29,7 @@ def trackTimes(data):
         if state == 'init':
             print("""
     The file is ready, to use this program please read the instructions then press the 'g' key.
+    to leave this menu press the 'l' key.
 
     When someone starts to talk press the t key. This will make the program print the line
     of text that it is captioning. When the speaker has finished the printed line release
@@ -47,9 +48,12 @@ def trackTimes(data):
                 from time import time #This would error out if it was at the top of the file
                 baseTime = time()
                 state = 'wait'
+            if pressed == 'l':
+                return 'leaveMenu'
         elif state == 'wait':
             if pressed == 't':
                 state = 'listen'
+                #print('You are captioning: %s'%lineText)
     #        elif pressed == '':
     #            state = 'released'
             elif pressed == 'e':
@@ -59,16 +63,19 @@ def trackTimes(data):
                 print("Restarting!")
                 state = 'init'
         elif state == 'listen':
+            timeStart = time()
+            print('start')
             wait = True
-            p = False
+            #p = False
             while wait:
-                if pressed == 't' and not p:
-                    timeStart = time()
-                    p = True
-                elif pressed != 't' and p:
+                # if pressed == 't' and not p:
+                #     timeStart = time()
+                #     print('start')
+                #     p = True
+                if pressed != 't':
                     timeEnd = time()
+                    print('end')
                     wait = False
-            timeEnd = time()
             line.startTime = timeStart-baseTime
             line.endTime = timeEnd-baseTime
             lineIndex += 1
@@ -122,3 +129,47 @@ def trackTimes(data):
     
 # print('File saved in %s/%s.%s'%('output', 'captions', 'srt'))
 # input("Press the 'Enter' key to finish")
+
+#change the method used to capture the input to be a non blocking way to get the input
+from pynput import keyboard
+
+pressed = ''
+
+class KeyLogger:
+    def __init__(self, escapeChar = keyboard.Key.esc):
+        self.repeating = False
+        self.data
+        self.index = 0
+        self.escapeChar = escapeChar
+    def on_press(self, key):
+        if key.char == 't' and not self.repeating:
+            self.tDown()
+        elif key.char == 'e':
+            print('exiting the logger...')
+            return self.data
+        elif key.char == 'g':
+            self.go()
+        elif key.char == 'r':
+            self.__init__(self.escapeChar)
+
+    def on_release(self, key):
+        global pressed
+        pressed = ''
+        if key.char == 't':
+            self.tUp()
+        elif key.char == self.escapeChar:
+            # Stop listener
+            print("listener stopped")
+            return False
+    
+    def tDown(self):
+        pass
+    def tUp(self):
+        pass
+    def go(self):
+        pass
+
+    listener = keyboard.Listener(
+        on_press=on_press,
+        on_release=on_release)
+    listener.start()
