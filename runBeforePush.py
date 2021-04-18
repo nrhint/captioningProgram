@@ -22,7 +22,7 @@ for root, dirs, files in os.walk(".", topdown=False):
             else:
                 paths.append(os.path.join(root, name))
 
-print(paths)
+#print(paths)
 text = ''
 for item in paths:
     text += str(item)+'\n'

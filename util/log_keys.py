@@ -1,4 +1,17 @@
 from pynput import keyboard
+from pynput import mouse
+from time import sleep
+
+down = False
+def on_click(x, y, button, pressed):
+    global down
+    if pressed:
+        down = True
+    else:
+        down = False
+
+mousel = mouse.Listener(on_click = on_click)
+mousel.start()
 
 pressed = ''
 def on_press(key):
@@ -31,7 +44,7 @@ def trackTimes(data):
     The file is ready, to use this program please read the instructions then press the 'g' key.
     to leave this menu press the 'l' key.
 
-    When someone starts to talk press the t key. This will make the program print the line
+    When someone starts to talk click the mouse down. This will make the program print the line
     of text that it is captioning. When the speaker has finished the printed line release
     the 't' key and wait for the next line to start t be spoken. The program will record
     the start and end of when you press and release the 't' key. When the video is finished
@@ -51,7 +64,7 @@ def trackTimes(data):
             if pressed == 'l':
                 return 'leaveMenu'
         elif state == 'wait':
-            if pressed == 't':
+            if down:# == 't':
                 state = 'listen'
                 #print('You are captioning: %s'%lineText)
     #        elif pressed == '':
@@ -65,17 +78,10 @@ def trackTimes(data):
         elif state == 'listen':
             timeStart = time()
             print('start')
-            wait = True
-            #p = False
-            while wait:
-                # if pressed == 't' and not p:
-                #     timeStart = time()
-                #     print('start')
-                #     p = True
-                if pressed != 't':
-                    timeEnd = time()
-                    print('end')
-                    wait = False
+            while down:
+                sleep(0.01)
+            timeEnd = time()
+            print('end')
             line.startTime = timeStart-baseTime
             line.endTime = timeEnd-baseTime
             lineIndex += 1

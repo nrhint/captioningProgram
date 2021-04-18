@@ -4,6 +4,7 @@
 ##Nathan Hinton. This program takes code from the pynput project found at: https://github.com/moses-palmer/pynput
 
 from util.file_util import open_file, write_file
+from util.adv_menu import generateConfigFile
 from data.data import Line
 
 class Menu:
@@ -16,6 +17,14 @@ class Menu:
     def startingMenu(self):
         if self.config.runNumber > 10:
             print("check for updates?")
+            u = input('Y/n')
+            if u != 'n':
+                self.config.runNumber = 0
+                from util.update import runUpdate
+                runUpdate(self.config)
+        else:
+            self.config.runNumber += 1
+        generateConfigFile(self.config)
         i = input('try to auto run ?(y/N)  ')
         if self.config.autoOpenFile == 'True' and self.error == False and i == 'y':
             self.dataFile = self.config.deafultCaptionFile

@@ -37,7 +37,11 @@ class AdvMenu:
                     """))
                     if x == 0: #Exit
                         if i == 2:
-                            self.generateConfigFile()
+                            generateConfigFile()
+                            print("Configuration file updated!")
+                            print("Reloading configuration...")
+                            from data.config import Config
+                            self.config = Config('config.cfg')
                         up = True
                     elif x == 1: #ccLength
                         self.config.ccLength = (int(input("New value in characters: ")))
@@ -88,8 +92,8 @@ class AdvMenu:
                 print("invalid option")
         return self.config
     
-    def generateConfigFile(self):
-        data = """##This is the config file that will contain data for the program
+def generateConfigFile(config):
+    data = """##This is the config file that will contain data for the program
 
 #default ccLength
 %s
@@ -102,10 +106,21 @@ class AdvMenu:
 
 #Should I use the default file automatically
 %s
-"""%(self.config.ccLength, self.config.format, self.config.deafultCaptionFile, self.config.autoOpenFile)
-        from util.file_util import write_file
-        write_file('.', 'config', 'cfg', data)
-        print("Configuration file updated!")
-        print("Reloading configuration...")
-        from data.config import Config
-        self.config = Config('config.cfg')
+
+#Default size
+%s
+
+#Default horizontal position
+%s
+
+#Default vertical position
+%s
+
+#Enable debugging:
+%s
+
+#Number of runs:
+%s
+"""%(config.ccLength, config.format, config.deafultCaptionFile, config.autoOpenFile, config.defaultSize, config.horizontalPosition, config.verticalPosition, config.saveDump, config.runNumber)
+    from util.file_util import write_file
+    write_file('.', 'config', 'cfg', data)    
