@@ -25,7 +25,8 @@ if v:print("loading modules and starting threads...")
 threads = []
 if v:print("loading video thread")
 video_queue = Queue()
-video_thread = threading.Thread(target = video.Video, args=(video_queue,))
+video_frame_queue = Queue()
+video_thread = threading.Thread(target = video.Video, args=(video_queue, video_frame_queue))
 video_thread.start()
 
 window.grid_columnconfigure(0, minsize=100, weight = 1)

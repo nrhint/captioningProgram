@@ -3,9 +3,10 @@ from queue import Queue
 import numpy
 
 class Video:
-    def __init__(self, queue):
+    def __init__(self, queue, send_video):
         print('starting video class...')
         self.queue = queue
+        self.send_video = send_video
         self.cap = None
         self.fps = None
         self.frame_count = None
