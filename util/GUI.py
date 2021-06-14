@@ -14,19 +14,22 @@ from data import video
 from queue import Queue
 from PIL import Image, ImageTk
 import cv2
+from time import time
 
 if v:print('loading the window...')
 
 #Start the window
 window = tk.Tk()
 window.geometry("800x600")
+video_update_rate = 1000
 
 if v:print("loading modules and starting threads...")
+sending_video = threading.Event()
 threads = []
 if v:print("loading video thread")
 video_queue = Queue()
 video_frame_queue = Queue()
-video_thread = threading.Thread(target = video.Video, args=(video_queue, video_frame_queue))
+video_thread = threading.Thread(target = video.Video, args=(video_queue, video_frame_queue, sending_video))
 video_thread.start()
 
 window.grid_columnconfigure(0, minsize=100, weight = 1)
@@ -50,7 +53,7 @@ image = Image.fromarray(blankload)
 image = ImageTk.PhotoImage(image)
 
 def select_video_file():
-    filetypes = (('text files', '*.mp4'), ('All files', '*.*'))
+    filetypes = (('All files', '*.*'), ('video files', '*.mp4'))
     filename = filedialog.askopenfilename(title='Open a file', initialdir='/', filetypes=filetypes)
     video_queue.put(filename)
 
@@ -82,11 +85,28 @@ captions_edit_frame.grid(column=0, row=3, sticky='n', columnspan=2, rowspan=3)
 video_frame.grid(column=2, row=0, sticky='n', columnspan=6, rowspan=4)
 captions_frame.grid(column=2, row=4, sticky='n', columnspan=6, rowspan=2)
 
-def updateVideoPannel():
-    global image
-    val = video_queue.get()
-    image = ImageTk.PhotoImage(val)
-    print("Updated screen")
+def updateVideoPanel():
+##    if low_frame_rate:
+##        print('low frame rate...')
+    video_update_rate = 1000
+    if sending_video.is_set():
+        if not video_frame_queue.empty():
+            val = video_frame_queue.get()
+            # if len(val) == 2: #If there is another value in adition to the image which would be the FPS
+            image = Image.fromarray(val[1])
+            image = ImageTk.PhotoImage(image)
+            display_image.configure(image = image)
+            display_image.image = image
+            if int((1000/val[0])+((val[2]-time())*1000)) < 10:
+                low_frame_rate = True
+                video_update_rate = 20
+            else:
+                low_frame_rate = False
+                video_update_rate = int((1000/val[0])+((val[2]-time())*1000))
+            # print("Updated screen")
+    # else:
+    #     print('nothing to update...')
+    window.after(video_update_rate, updateVideoPanel)
 
-#window.after(1000, updateVideoPannel)
+window.after(video_update_rate, updateVideoPanel)
 window.mainloop()

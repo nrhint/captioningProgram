@@ -1,7 +1,9 @@
 .\data\config.py
 .\data\data.py
+.\data\defaultImages.py
 .\data\video.py
 .\data\__init__.py
+.\images\blank.png
 .\pynput\keyboard\_base.py
 .\pynput\keyboard\_darwin.py
 .\pynput\keyboard\_dummy.py
@@ -32,8 +34,9 @@
 .\util\file_util.py
 .\util\formatConverter.py
 .\util\generate_captions_util.py
+.\util\GUI.py
 .\util\log_keys.py
-.\util\menu.py
+.\util\menu_old.py
 .\util\render_frame.py
 .\util\subtitle_util.py
 .\util\text_util.py
@@ -45,7 +48,6 @@
 .\changelog
 .\config.cfg
 .\example.txt
-.\lastDump.pk
 .\LICENSE
 .\README.md
 .\runBeforePush.py
@@ -58,6 +60,6 @@
 .\.git
 .\.vscode
 .\data
-.\output
+.\images
 .\pynput
 .\util

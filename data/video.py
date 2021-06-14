@@ -1,9 +1,10 @@
 import cv2
-from queue import Queue
+# from queue import Queue
 import numpy
+from time import time
 
 class Video:
-    def __init__(self, queue, send_video):
+    def __init__(self, queue, send_video, sending_video_flag):
         print('starting video class...')
         self.queue = queue
         self.send_video = send_video
@@ -15,25 +16,29 @@ class Video:
         self.height = None
         self.frame_number = None
         self.filepath = None
+        self.sending_video = sending_video_flag
         self.run()
 
     def run(self):
         print('video thread started...')
         while True:
-            val = self.queue.get()
-            if type(val) == numpy.ndarray:
-                pass
-            elif val is None:   # If you send `None`, the thread will exit.
-                return
-            elif val == "play":
-                print(val)
+            if not self.queue.empty():
+                val = self.queue.get()
+                if val is None:   # If you send `None`, the thread will exit.
+                    return
+                elif val == 'pause':
+                    pass
+                elif val == "play":
+                    if not self.sending_video.is_set():
+                        self.sending_video.set()
+                    print(val)
+                    self.play_video()
+                elif type(val) != numpy.ndarray:#Try to see if the value is a file path
+                    self.filepath = val
+                    print(val)
+                    self.open_video()
+            if self.sending_video.is_set() == True:
                 self.play_video()
-            elif val == 'pause':
-                pass
-            elif type(val) != numpy.ndarray:#Try to see if the value is a file path
-                self.filepath = val
-                print(val)
-                self.open_video()
 
     def print(self):
         print('-- Video Detail --')
@@ -63,6 +68,12 @@ class Video:
     def play_video(self):
         if self.fps == None:
             self.findDetail()
-        ret, frame = self.cap.read(self.frame_number)
-        if ret == True:
-            self.queue.put(frame)
+        if self.send_video.empty():
+            ret, frame = self.cap.read(self.frame_number)
+            if ret == True:
+                # print('sent frame number %s'%self.frame_number)
+                # if self.frame_number != 0:
+                #     self.send_video.put(frame)
+                # else:
+                self.send_video.put((self.fps, frame, time()))
+                self.frame_number += 1
