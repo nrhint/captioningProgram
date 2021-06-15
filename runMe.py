@@ -1,4 +1,3 @@
-from os import O_SHORT_LIVED
 from data.config import Config
 
 config = Config('config.cfg')

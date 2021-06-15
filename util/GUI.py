@@ -15,6 +15,7 @@ from queue import Queue
 from PIL import Image, ImageTk
 import cv2
 from time import time
+from time import sleep
 
 if v:print('loading the window...')
 
@@ -22,22 +23,28 @@ if v:print('loading the window...')
 window = tk.Tk()
 window.geometry("800x600")
 video_update_rate = 1000
+frameNum = 0
 
 if v:print("loading modules and starting threads...")
+generate = threading.Event()
 sending_video = threading.Event()
 ready_for_frame = threading.Event()
+fps_ready = threading.Event()
 threads = []
 if v:print("starting video thread")
 video_queue = Queue()
 video_frame_queue = Queue()
-video_thread = threading.Thread(target = video.Video, args=(video_queue, video_frame_queue, sending_video, ready_for_frame))
+fps_queue = Queue()
+video_thread = threading.Thread(target = video.Video, args=(video_queue, video_frame_queue, sending_video, ready_for_frame, generate, fps_ready, fps_queue))
 video_thread.start()
 if v:print('starting caption thread...')
 caption_queue = Queue()
+cap = Queue()
+captions_ready = threading.Event()
 start_line_flag = threading.Event()
 end_line_flag = threading.Event()
 new_text_flag = threading.Event()
-caption_thread = threading.Thread(target = captions.captions, args=(caption_queue, start_line_flag, end_line_flag, new_text_flag))
+caption_thread = threading.Thread(target = captions.captions, args=(caption_queue, start_line_flag, end_line_flag, new_text_flag, generate, captions_ready, cap))
 caption_thread.start()
 
 window.grid_columnconfigure(0, minsize=100, weight = 1)
@@ -60,10 +67,19 @@ blankload = cv2.imread('images/blank.png')
 image = Image.fromarray(blankload)
 image = ImageTk.PhotoImage(image)
 
+def generate_captions():
+    if v: print('generating captions')
+    generate.set()
+    fps_ready.wait()
+    captions_ready.wait()
+    data = cap.get()
+    fps = fps_queue.get()
+    print(data, fps)
+
 def select_video_file():
     filetypes = (('All files', '*.*'), ('video files', '*.mp4'))
     filename = filedialog.askopenfilename(title='Open a file', initialdir='/', filetypes=filetypes)
-    video_queue.put(filename)
+    video_queue.put((filename, display_image.winfo_width(), display_image.winfo_height()))
 
 def select_text_file():
     filetypes = (('text file', '*.txt'), ('All files', '*.*'))
@@ -74,9 +90,11 @@ def select_text_file():
 
 def endLine(garbage):
     end_line_flag.set()
+    caption_queue.put(frameNum)
     # pressToTrack.configure(text='press to key caption')
 def startLine():
     start_line_flag.set()
+    caption_queue.put(frameNum)
     # pressToTrack.configure(text='press to key out caption')
 
 options_frame = tk.Frame(master = window)
@@ -98,6 +116,7 @@ captionsEditText = tk.Label(captions_edit_frame, text = 'Captions options', bord
 openCaptions = tk.Button(captions_edit_frame, text = 'open caption file', command=select_text_file)
 pressToTrack = tk.Button(captions_edit_frame, text = 'No file loaded...', command=startLine)
 pressToTrack.bind("<ButtonRelease>", endLine)
+generateCaptions = tk.Button(captions_edit_frame, text = 'generate captions', command = generate_captions)
 
 optionText.pack()
 openFile.pack()
@@ -110,6 +129,7 @@ display_image.pack()
 captionsEditText.pack()
 openCaptions.pack()
 pressToTrack.pack()
+generateCaptions.pack()
 
 captionsText.pack()
 currentLine.pack()
@@ -120,11 +140,13 @@ video_frame.grid(column=2, row=0, sticky='n', columnspan=6, rowspan=4)
 captions_frame.grid(column=2, row=4, sticky='n', columnspan=6, rowspan=2)
 
 def updateVideoPanel():
+    global frameNum
     video_update_rate = 1000
     if sending_video.is_set():
         ready_for_frame.set()
         if not video_frame_queue.empty():
             val = video_frame_queue.get()
+            frameNum = val[2]
             image = Image.fromarray(val[1])
             image = ImageTk.PhotoImage(image)
             display_image.configure(image = image)
