@@ -82,12 +82,10 @@ class AdvMenu:
                     for name in files:
                         if name[-3:] == 'vtt':
                             paths.append(path.join(root, name))
-                print('found %s files to convert'%len(paths))
+                print('found %s file(s) to convert'%len(paths))
                 print(paths)
                 for p in paths:
                     c = Convert(p)
-                    data = c.finishedData
-                    open(str(p[:-4])+'.srt', 'w').write(data)
             else:
                 print("invalid option")
         return self.config
