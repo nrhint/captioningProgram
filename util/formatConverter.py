@@ -45,9 +45,5 @@ class Convert:
             else:
                 self.output += line + '\n'
         else:
-<<<<<<< HEAD
             write_file('output', 'converted', 'srt', self.srtFormattedFile)
             print("File written to ./output/converted.srt")
-=======
-            write_file('output', 'converted', 'srt', self.output)
->>>>>>> main
