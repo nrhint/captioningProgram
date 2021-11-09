@@ -30,7 +30,7 @@ from util.file_util import write_file, open_file
 write_file('.', 'tree', 'tree', text)
 
 ##update the version file:
-versionData = open_file('.', 'version', '')
+versionData = open('version', 'r').read()
 change = int(input('1.2.3.4?  '))
 if change < 4 : #If it is not 4: 
     if change < 3: #if it is 2 or 1
@@ -41,7 +41,10 @@ if change < 4 : #If it is not 4:
     else: #change is 3:
         newVersion = versionData[0:4]+str(int(versionData[4])+1)+'.0'
 else:
+    print(versionData)
     newVersion = versionData[0:6]+str(int(versionData[6])+1)
 print('%s --> %s'%(versionData, newVersion))
-write_file('.', 'version', '', newVersion)
+v = open('version', 'w')
+v.write(newVersion)
+v.close()
 print("finished. Please run git and merge with the master branch.")

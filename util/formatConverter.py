@@ -7,10 +7,8 @@ class Convert:
     def __init__(self, i = False):
         if i == False:
             self.i = input('Enter the file name: ')
-            self.raw = False
         else:
             self.i = i
-            self.raw = True
         if self.i[-3:] == 'vtt':
             print('vtt format')
             self.vttToSrt()
@@ -20,10 +18,7 @@ class Convert:
         else:
             print('the file format is unsupported. Exiting the converter...')
     def vttToSrt(self):
-        if not self.raw:
-            self.file = open_file('.', self.i[:-4], self.i[-3:])
-        else:
-            self.file = open(self.i, 'r').read()
+        self.file = open(self.i, 'r').read()
         self.output = ''
         #Search for the start of the file:
         index = 0
@@ -49,8 +44,10 @@ class Convert:
                 self.output += '\n'
             else:
                 self.output += line + '\n'
-        if self.raw:
-            self.finishedData = self.output
         else:
+<<<<<<< HEAD
             write_file('output', 'converted', 'srt', self.srtFormattedFile)
             print("File written to ./output/converted.srt")
+=======
+            write_file('output', 'converted', 'srt', self.output)
+>>>>>>> main
