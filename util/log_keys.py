@@ -96,6 +96,8 @@ def trackTimes(data):
         elif state == 'end':
             print("Ending...")
             state = False
+            mousel.stop()
+            listener.stop()
         elif state == 'whoops':
             print("""
             AAH! You seem to have run out of lines. If you accidentally pressed the
@@ -123,59 +125,3 @@ def trackTimes(data):
 
     #Zero out the timestamp
     return data
-
-# captioner = GenerateCaptions(data, configData)
-# data_to_write = captioner.generate()
-
-# try:
-#     write_file('output', 'captions', 'srt', data_to_write)
-# except:
-#     print(data_to_write)
-#     print('Generate test unsuccess.')
-    
-# print('File saved in %s/%s.%s'%('output', 'captions', 'srt'))
-# input("Press the 'Enter' key to finish")
-
-#change the method used to capture the input to be a non blocking way to get the input
-from pynput import keyboard
-
-pressed = ''
-
-class KeyLogger:
-    def __init__(self, escapeChar = keyboard.Key.esc):
-        self.repeating = False
-        self.data
-        self.index = 0
-        self.escapeChar = escapeChar
-    def on_press(self, key):
-        if key.char == 't' and not self.repeating:
-            self.tDown()
-        elif key.char == 'e':
-            print('exiting the logger...')
-            return self.data
-        elif key.char == 'g':
-            self.go()
-        elif key.char == 'r':
-            self.__init__(self.escapeChar)
-
-    def on_release(self, key):
-        global pressed
-        pressed = ''
-        if key.char == 't':
-            self.tUp()
-        elif key.char == self.escapeChar:
-            # Stop listener
-            print("listener stopped")
-            return False
-    
-    def tDown(self):
-        pass
-    def tUp(self):
-        pass
-    def go(self):
-        pass
-
-    listener = keyboard.Listener(
-        on_press=on_press,
-        on_release=on_release)
-    listener.start()
