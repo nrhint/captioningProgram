@@ -53,3 +53,4 @@ class Convert:
             self.finishedData = self.output
         else:
             write_file('output', 'converted', 'srt', self.srtFormattedFile)
+            print("File written to ./output/converted.srt")
