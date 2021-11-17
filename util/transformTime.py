@@ -39,7 +39,7 @@ def shiftTimes(times, shiftTime):
     result = []
     for time in times:
         tmp = stringToNumber(time)
-        print(tmp, tmp + shiftTime)
+        #print(tmp, tmp + shiftTime)
         tmp += shiftTime
         result.append(numberToString(tmp))
     return result

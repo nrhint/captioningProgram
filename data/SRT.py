@@ -27,6 +27,7 @@ class SRT:
                 if not justMadeLine:
                     self.lines.append(Line(text=self.recentWords, startTime=self.startTimes[-1], endTime=self.endTimes[-1]))
                     self.words += self.recentWords
+                    self.recentWords = ''
                     justMadeLine = True
             else:
                 self.recentWords += line
