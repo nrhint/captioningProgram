@@ -31,4 +31,4 @@ def run(i = ''):
         writeFile(data.lines, i)
         print("Remaped!")
 
-#output/converted.srt
+print("Loaded module remapTimes")

@@ -14,7 +14,7 @@
 ##What I want:
 ##Timing for the videos, format converter
 
-from menus import srtFromKeys, formatConverter, remapTimes
+from menus import srtFromKeys, formatConverter, remapTimes, autoGenCaptions
 
 run = True
 
@@ -23,6 +23,7 @@ while run:
 1: create SRT file from keypresses
 2: convert formats of SRT files
 3: remap timestamps
+4: auto generate captions from video
 e: exit
 """)
     i = input("")
@@ -32,6 +33,8 @@ e: exit
         formatConverter.run()
     elif i == "3":
         remapTimes.run()
+    elif i == "4":
+        autoGenCaptions.run()
     elif i == "e":
         run = False
     else:
