@@ -14,7 +14,7 @@
 ##What I want:
 ##Timing for the videos, format converter
 
-from menus import srtFromKeys, formatConverter
+from menus import srtFromKeys, formatConverter, remapTimes
 
 run = True
 
@@ -22,6 +22,7 @@ while run:
     print("""
 1: create SRT file from keypresses
 2: convert formats of SRT files
+3: remap timestamps
 e: exit
 """)
     i = input("")
@@ -29,6 +30,8 @@ e: exit
         srtFromKeys.run()
     elif i == "2":
         formatConverter.run()
+    elif i == "3":
+        remapTimes.run()
     elif i == "e":
         run = False
     else:
