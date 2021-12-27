@@ -14,7 +14,8 @@
 ##What I want:
 ##Timing for the videos, format converter
 
-from menus import srtFromKeys, formatConverter, remapTimes, autoGenCaptions
+#from menus import srtFromKeys, formatConverter, remapTimes, autoGenCaptions
+from menus import formatConverter
 
 run = True
 
