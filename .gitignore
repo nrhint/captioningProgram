@@ -4,3 +4,7 @@ output
 .vscode
 *.pk
 *tmp*
+*.mp4
+*.wav
+*model*
+output*
