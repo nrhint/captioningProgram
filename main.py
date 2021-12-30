@@ -1,43 +1,35 @@
-# from data.config import Config
+import tkinter as tk
+from menus import srtFromKeys
+from util.formatConverter import Convert
+from util import convertFromVoice
 
-# config = Config('config.cfg')
-# i = input('Run in old mode? (y/N): ')
-# if i == 'y' or i == 'Y':
-#     from util.menu_old import Menu
-#     menu = Menu(config)
-# else:
-#     from util import GUI
-# #from util import GUI
+window = tk.Tk()
 
+window.title("Caption stuff")
 
-##Start defining the new manus and functions:
-##What I want:
-##Timing for the videos, format converter
+greeting = tk.Label(text="Welcome! Please pick an option:")
+greeting.pack()
 
-#from menus import srtFromKeys, formatConverter, remapTimes, autoGenCaptions
-from menus import formatConverter
+srtFromKeys = tk.Button(text = "Create SRT from keypresses (Decrepidated)", width=50, height = 0, bg='lightblue', fg='white', command=srtFromKeys.srtFromKeys)
+srtFromKeys.pack()
 
-run = True
+srtFromVoice = tk.Button(text = "Autogenerate captions", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = convertFromVoice.convert())
+srtFromVoice.pack()
 
-while run:
-    print("""
-1: create SRT file from keypresses
-2: convert formats of SRT files
-3: remap timestamps
-4: auto generate captions from video
-e: exit
-""")
-    i = input("")
-    if i == "1":
-        srtFromKeys.run()
-    elif i == "2":
-        formatConverter.run()
-    elif i == "3":
-        remapTimes.run()
-    elif i == "4":
-        autoGenCaptions.run()
-    elif i == "e":
-        run = False
-    else:
-        print("Input error. Please try again")
-print("Thank you!")
+convertFormat = tk.Button(text = "Convert from vtt to srt format", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = Convert)
+convertFormat.pack()
+
+window.mainloop()
+window.quit()
+
+#     elif i == "2":
+#         formatConverter.run()
+#     elif i == "3":
+#         remapTimes.run()
+#     elif i == "4":
+#         autoGenCaptions.run()
+#     elif i == "e":
+#         run = False
+#     else:
+#         print("Input error. Please try again")
+# print("Thank you!")
