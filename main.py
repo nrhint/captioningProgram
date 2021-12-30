@@ -1,7 +1,7 @@
 import tkinter as tk
 from menus import srtFromKeys
 from util.formatConverter import Convert
-from util import convertFromVoice
+from VTT import convert
 
 window = tk.Tk()
 
@@ -13,7 +13,7 @@ greeting.pack()
 srtFromKeys = tk.Button(text = "Create SRT from keypresses (Decrepidated)", width=50, height = 0, bg='lightblue', fg='white', command=srtFromKeys.srtFromKeys)
 srtFromKeys.pack()
 
-srtFromVoice = tk.Button(text = "Autogenerate captions", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = convertFromVoice.convert())
+srtFromVoice = tk.Button(text = "Autogenerate captions", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = convert.convertFromVoice)
 srtFromVoice.pack()
 
 convertFormat = tk.Button(text = "Convert from vtt to srt format", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = Convert)
