@@ -1,24 +1,15 @@
 ##Nathan Hinton
 ##This will change the caption format of a file from one thing to another
+##Used
 
-from util.file_util import open_file, write_file
+from util.file_util import write_file
+import tkinter.filedialog
 
 class Convert:
     def __init__(self, i = False):
-        if i == False:
-            self.i = input('Enter the file name: ')
-        else:
-            self.i = i
-        if self.i[-3:] == 'vtt':
-            print('vtt format')
-            self.vttToSrt()
-            print("PAH!")
-        elif self.i[-3:] == 'srt':
-            print('srt format')
-        else:
-            print('the file format is unsupported. Exiting the converter...')
-    def vttToSrt(self):
-        self.file = open(self.i, 'r').read()
+
+        filename = tkinter.filedialog.askopenfile()
+        self.file = filename.read()
         self.output = ''
         #Search for the start of the file:
         index = 0
@@ -44,6 +35,5 @@ class Convert:
                 self.output += '\n'
             else:
                 self.output += line + '\n'
-        else:
-            write_file('output', 'converted', 'srt', self.srtFormattedFile)
-            print("File written to ./output/converted.srt")
+        write_file('output', 'converted', 'srt', self.output)
+        print("File written to ./output/converted.srt")

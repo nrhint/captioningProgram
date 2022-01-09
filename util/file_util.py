@@ -1,5 +1,6 @@
 ##Nathan Hinton
 ##This is for opening and handeling files in a consistent manner
+##Used
 
 def open_file(file_path, file_name, file_extension):
     try:

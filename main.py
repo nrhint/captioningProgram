@@ -1,36 +1,33 @@
-# from data.config import Config
+import tkinter as tk
+from util.formatConverter import Convert
+from VTT import convert
 
-# config = Config('config.cfg')
-# i = input('Run in old mode? (y/N): ')
-# if i == 'y' or i == 'Y':
-#     from util.menu_old import Menu
-#     menu = Menu(config)
-# else:
-#     from util import GUI
-# #from util import GUI
+window = tk.Tk()
 
+window.title("Caption stuff")
 
-##Start defining the new manus and functions:
-##What I want:
-##Timing for the videos, format converter
+greeting = tk.Label(text="Welcome! Please pick an option:")
+greeting.pack()
 
-from menus import srtFromKeys, formatConverter
+srtFromVoice = tk.Button(text = "Autogenerate captions", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = convert.convertFromVoice)
+srtFromVoice.pack()
 
-run = True
+convertFormat = tk.Button(text = "Convert from vtt to srt format", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = Convert)
+convertFormat.pack()
 
-while run:
-    print("""
-1: create SRT file from keypresses
-2: convert formats of SRT files
-e: exit
-""")
-    i = input("")
-    if i == "1":
-        srtFromKeys.run()
-    elif i == "2":
-        formatConverter.run()
-    elif i == "e":
-        run = False
-    else:
-        print("Input error. Please try again")
-print("Thank you!")
+##Tranform times...
+
+window.mainloop()
+window.quit()
+
+#     elif i == "2":
+#         formatConverter.run()
+#     elif i == "3":
+#         remapTimes.run()
+#     elif i == "4":
+#         autoGenCaptions.run()
+#     elif i == "e":
+#         run = False
+#     else:
+#         print("Input error. Please try again")
+# print("Thank you!")
