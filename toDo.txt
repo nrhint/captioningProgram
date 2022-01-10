@@ -1,23 +1,10 @@
 Easy:
- - Make the program look for specific file on startup instead of having the user enter the name
- - Change the program so that the line of text shows before you press the 't' key
- - Have a start message print when the 'g' key is pressed
- - Add an advanced options in the menu for changing the cc length or other things
- - make a config file
-   - change the verbosity of the output
-   - change if there is a default file to look for
-   - default ccLength
-   - default pos and size of captions
-   - default rotation?
+  - update to a full gui menu
+  - default pos and size of captions
+  - default rotation?
+  - Weed out un needed files...
+  - Update the auto caps and fixer program for autogen captions to use a file to fix things
 Medium:
- - Make an auto update function
- - Make a option to shift the captions in time
- - change the output format to have either SRT or VTT captions
-Hard:
- - Make the program open up the video inside of itself.
- - make the program burn in the captions if the user wants that
-
-Plan:
- - add to and use the config file
- - change the menu to be in a different file
- - build the auto update function
+  - (DONE) Make a option to shift the captions in time
+  - change the output format to have either SRT or VTT captions
+  - make sure all deps are installed on startup

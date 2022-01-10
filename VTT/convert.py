@@ -1,10 +1,9 @@
 ##Nathan Hinton
 ##This is a wrapper module for the program to be given a filename and it will write the caption ro that path
 
-import sys
-from VTT import test_srt
 from VTT import fix_caps
 import tkinter.filedialog
+import subprocess
 
 
 def convertFromVoice():
@@ -13,8 +12,12 @@ def convertFromVoice():
 
     ##Keywords: path to convert, [outputFilename]
     print("Converting from video to srt...")
-    output = test_srt.convert(filename)
-    # print(output)
+    output = subprocess.run(["python3", "VTT/convert_srt.py", filename], capture_output=True)
+    if output.stderr != b'':
+        print("!!!!! THERE WAS AN ERROR !!!!!")
+        print("Failed to open process...")
+        print(output.stderr)
+        raise Exception
     # Recurse up the filepath as to generate a new filename
     for x in range(len(filename), 0, -1):
         if filename[0:x][-1] == '/':

@@ -1,5 +1,4 @@
 import tkinter as tk
-from menus import srtFromKeys
 from util.formatConverter import Convert
 from VTT import convert
 
@@ -10,14 +9,13 @@ window.title("Caption stuff")
 greeting = tk.Label(text="Welcome! Please pick an option:")
 greeting.pack()
 
-srtFromKeys = tk.Button(text = "Create SRT from keypresses (Decrepidated)", width=50, height = 0, bg='lightblue', fg='white', command=srtFromKeys.srtFromKeys)
-srtFromKeys.pack()
-
 srtFromVoice = tk.Button(text = "Autogenerate captions", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = convert.convertFromVoice)
 srtFromVoice.pack()
 
 convertFormat = tk.Button(text = "Convert from vtt to srt format", width = 50, height = 0, bg = 'lightblue', fg = 'white', command = Convert)
 convertFormat.pack()
+
+##Tranform times...
 
 window.mainloop()
 window.quit()
