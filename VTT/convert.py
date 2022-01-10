@@ -5,16 +5,11 @@ import sys
 from VTT import test_srt
 from VTT import fix_caps
 import tkinter.filedialog
-import tkinter as tk
 
 
 def convertFromVoice():
-    window = tk.Tk()
-
-    window.title("Change format from VTT to SRT")
 
     filename = tkinter.filedialog.askopenfilename()
-    
 
     ##Keywords: path to convert, [outputFilename]
     print("Converting from video to srt...")

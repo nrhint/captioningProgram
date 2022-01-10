@@ -3,14 +3,9 @@
 
 from util.file_util import write_file
 import tkinter.filedialog
-import tkinter as tk
 
 class Convert:
     def __init__(self, i = False):
-
-        window = tk.Tk()
-
-        window.title("Change format from VTT to SRT")
 
         filename = tkinter.filedialog.askopenfile()
         self.file = filename.read()
