@@ -8,32 +8,29 @@ import tkinter.filedialog
 class Convert:
     def __init__(self, i = False):
 
-        filename = tkinter.filedialog.askopenfile()
-        self.file = filename.read()
+        filename = tkinter.filedialog.askopenfilename()
+        self.file = open(filename, 'r').read()
         self.output = ''
         #Search for the start of the file:
         index = 0
-        while self.file[index] != '0':
+        lines = self.file.splitlines()
+        while lines[index] == '' or lines[index][0] != '0':
             index +=1
-        if self.file[index:index+2] == '00':
-            print('Start found!')
-        else:
-            print("Failed")
-            from time import sleep
-            sleep(5)
-            raise Exception
-        self.file = self.file[index:]
-        lines = self.file.split('\n')
+        lines = lines[index:]
         counter = 1
         for line in lines:
             print(line)
-            if line[0:2] == '00':
-                self.output += '%s\n'%counter
-                self.output += line[:29]+'\n'
-                counter += 1
-            elif line == '': #If it was a new line:
+            if line == '': #If it was a new line:
                 self.output += '\n'
+            elif line[2] == ':' and (line[5] == '.' or line[5] == ':'):
+                self.output += '%s\n'%counter
+                self.output += line[:23]+'\n' #Used to be 29
+                counter += 1
             else:
                 self.output += line + '\n'
-        write_file('output', 'converted', 'srt', self.output)
-        print("File written to ./output/converted.srt")
+            # Recurse up the filepath as to generate a new filename
+        for x in range(len(filename), 0, -1):
+            if filename[0:x][-1] == '/':
+                path = filename[0:x-1]
+                break
+        write_file(path, 'converted', 'srt', self.output)
